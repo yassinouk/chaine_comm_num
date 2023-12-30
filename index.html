@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Signal Transmission</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div id="original" style="width:100%;height:500px;display:inline-block;"></div>
+    <div id="transmitted" style="width:100%;height:500px;display:inline-block;"></div>
+    <div id="demodulated" style="width:100%;height:500px;display:inline-block;"></div>
+
+    <script>
+    fetch('/api/endpoint1')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var trace1 = {
+                x: Array.from({ length: data.y.length }, (_, i) => i + 1),
+                y: data.y,
+                type: 'scatter'
+            };
+
+            var layout = {
+                title: 'Demodulated Signal',
+                xaxis: {
+                    title: 'Bit Index',
+                },
+                yaxis: {
+                    title: 'Bit Value',
+                }
+            };
+
+            Plotly.newPlot('original', [trace1], layout);
+        });
+
+
+    fetch('/api/endpoint2')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log("this text for testing purposes")
+            console.log(data)
+            var trace2 = {
+                x: Array.from({ length: data.y.length }, (_, i) => i + 1),
+                y: data.y.map(x => x / 1e4),
+                type: 'scatter'
+            };
+
+            var layout = {
+                title: 'Received Signal',
+                xaxis: {
+                    title: 'Bit Index',
+                },
+                yaxis: {
+                    title: 'Bit Value',
+                }
+            };
+
+            Plotly.newPlot('transmitted', [trace2], layout);
+        });
+        fetch('/api/endpoint3')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var trace3 = {
+                x: Array.from({ length: data.y.length }, (_, i) => i + 1),
+                y: data.y,
+                type: 'scatter'
+            };
+
+            var layout = {
+                title: 'original Signal',
+                xaxis: {
+                    title: 'Bit Index',
+                },
+                yaxis: {
+                    title: 'Original Bit signal Value',
+                }
+            };
+
+            Plotly.newPlot('demodulated', [trace3], layout);
+        });
+    </script>
+</body>
+
+</html>
