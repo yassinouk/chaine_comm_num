@@ -38,6 +38,21 @@ Le serveur web expose trois endpoints API pour obtenir des données sous forme d
 ## Dépendances tierces
 Ce projet utilise le package tiers `github.com/mjibson/go-dsp/fft` pour les transformations FFT/IFFT.
 
+## Documentation
+### bpsk modulation:
+```go
+func (c *LTEChannel) Modulate(bits []int64) []complex128 { // fonction pour moduler les bits dans les symboles complexes. Chaque bit est converti en symbole complexe
+	symbols := make([]complex128, len(bits)) // création d'un tableau pour stocker les symboles
+
+	for i, b := range bits { // iterate over each bit
+		symbols[i] = complex(float64(2*b-1), 0) // convert the bit to a complex symbol
+	}
+
+	return symbols // retourne les symboles après la modulation
+}
+```
+
+
 ## Auteur
 OUAKKA Yassin
 
