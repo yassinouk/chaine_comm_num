@@ -32,7 +32,7 @@ Le serveur web expose trois endpoints API pour obtenir des données sous forme d
 Ce projet utilise le package tiers `github.com/mjibson/go-dsp/fft` pour les transformations FFT/IFFT.
 
 ## Auteur
-[OUAKKA Yassin]
+OUAKKA Yassin
 
 ## Licence
 Ce projet est sous licence MIT.
