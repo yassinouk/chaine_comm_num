@@ -1,6 +1,13 @@
 # yassinouk.github.io
 # Readme
 ![Hero Image](ensate.png) <!-- hero image -->
+
+## Encadré par
+Fouad AYTOUNA
+
+## Réalisé par
+Yassin OUAKKA
+
 ## Description
 Ce code implémente une simulation basique d'un canal LTE (Long-Term Evolution) en utilisant le langage de programmation Go. Le canal LTE est modélisé avec des fonctionnalités telles que la modulation/démodulation BPSK, la modulation OFDM (Orthogonal Frequency-Division Multiplexing), l'effet de diffusion de Rayleigh, et l'ajout de bruit blanc additif gaussien (AWGN). Le résultat de la simulation est affiché, et un serveur web est également lancé pour fournir des données en réponse à des requêtes HTTP.
 
