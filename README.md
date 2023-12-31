@@ -43,6 +43,19 @@ Le code source fourni met en œuvre les fonctions primaires pour simuler la tran
 
 Les sections suivantes documentent les fonctions `OFDMModulate`, `OFDMDemodulate`, `Demodulate`, `Transmit` et la manière dont les signaux de sortie sont traités.
 
+
+### Signale original:
+```go
+func main() { // fonction principale
+	lteChannel := &LTEChannel{} // crée un nouveau canal LTE
+	bits := make([]int64, 1000) // génère un tableau de 100 bits
+	for i := range bits {       // pour chaque bit
+		bits[i] = int64(rand.Intn(2)) // génère un bit aléatoire (0 ou 1)
+	}
+```
+
+![signal original](signaloriginal.png) <!-- signal original image -->
+
 ### Modulation bpsk:
 ```go
 func (c *LTEChannel) Modulate(bits []int64) []complex128 { // fonction pour moduler les bits dans les symboles complexes. Chaque bit est converti en symbole complexe
@@ -55,10 +68,6 @@ func (c *LTEChannel) Modulate(bits []int64) []complex128 { // fonction pour modu
 	return symbols // retourne les symboles après la modulation
 }
 ```
-### output:
-```console
-place holder
-```
 
 ### Modulation OFDM:
 ```go
@@ -66,10 +75,7 @@ func (c *LTEChannel) OFDMModulate(symbols []complex128) []complex128 { // Foncti
 	return fft.IFFT(symbols) // Utilise la transformée de Fourier rapide inverse (IFFT) pour obtenir les symboles modulés en OFDM.
 }
 ```
-### output:
-```console
-place holder
-```
+
 ### Rayleigh channel:
 ```go
 func (c *LTEChannel) Rayleigh(symbols []complex128) []complex128 { // fonction pour modéliser l'effet de la diffusion de Rayleigh sur les symboles
@@ -84,8 +90,10 @@ func (c *LTEChannel) Rayleigh(symbols []complex128) []complex128 { // fonction p
 ```
 ### output:
 ```console
-place holder
+symbols output from rayleigh channel
+ [(0.028590689424965985-0.025046291032610545i) (-0.051519739879452985-0.017037712151984925i) (-0.004556136507801563-0.019192001072470176i) (0.014619318304108715-0.012981220336202255i)...]
 ```
+
 ### AWGN bruit:
 ```go
 func (c *LTEChannel) AWGN(symbols []complex128, snr float64) []complex128 { // fonction pour ajouter un bruit blanc additif gaussien (AWGN) aux symboles
@@ -100,10 +108,7 @@ func (c *LTEChannel) AWGN(symbols []complex128, snr float64) []complex128 { // f
 	return symbolsPlusNoise // retourne les symboles après ajout du bruit AWGN
 }
 ```
-### output:
-```console
-place holder
-```
+
 ### Transmission:
 ```go
 func (c *LTEChannel) Transmit(bits []int64, snr float64) []complex128 { // Fonction pour transmettre des bits sur le canal LTE
@@ -115,10 +120,11 @@ func (c *LTEChannel) Transmit(bits []int64, snr float64) []complex128 { // Fonct
 ```
 ### output:
 ```console
-place holder
+transmitted
+ [(0.02859068953131702-0.025046291032610545i) (-0.05151973982790638-0.017037712151984925i) (-0.004556136500509521-0.019192001072470176i)...]
 ```
 La fonction `Transmit` intègre toutes les effets de modulation et de transmission (Rayleigh & AWGN) en un seul processus qui simule la transmission de bits sur un canal LTE. Le résultat de cette fonction est les symboles complexes qui représentent le signal transmis.
-![Hero Image](ensate.png) <!-- hero image -->
+![signal recu](signalrecu.png) <!-- signal recu image -->
 
 ### Démodulation OFDM:
 ```go
@@ -128,7 +134,8 @@ func (c *LTEChannel) OFDMDemodulate(symbols []complex128) []complex128 { // Fonc
 ```
 ### output:
 ```console
-place holder
+ofdm demodulation:
+ [(-1.5515888104296438+1.4467145164462023i) (1.429307721774392-0.3449814028136927i) (-1.59164715622883+0.4571744410232078i) (-1.180802240752774-0.6198685139043072i)...]
 ```
 
 ### Démodulation bpsk:
@@ -147,7 +154,7 @@ func (c *LTEChannel) Demodulate(symbols []complex128) []int64 { // Fonction pour
 	return bits // Retourne les bits après la démodulation
 }
 ```
-![Hero Image](ensate.png) <!-- hero image -->
+![signal demodule](signaldemodule.png) <!-- hero image -->
 
 ## Auteur
 OUAKKA Yassin
