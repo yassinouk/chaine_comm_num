@@ -39,7 +39,11 @@ Le serveur web expose trois endpoints API pour obtenir des données sous forme d
 Ce projet utilise le package tiers `github.com/mjibson/go-dsp/fft` pour les transformations FFT/IFFT.
 
 ## Documentation
-### bpsk modulation:
+Le code source fourni met en œuvre les fonctions primaires pour simuler la transmission de signaux sur un canal de Long Term Evolution (LTE). Il comporte la modulation Binary Phase Shift Keying (BPSK) et le multiplexage par répartition orthogonale de la fréquence (OFDM) pour transmettre les signaux sur le canal LTE. Il simule les effets typiques qui affectent la transmission du signal sur un canal LTE et comprend des fonctions pour gérer le bruit du signal et les effets de dégradation.
+
+Les sections suivantes documentent les fonctions `OFDMModulate`, `OFDMDemodulate`, `Demodulate`, `Transmit` et la manière dont les signaux de sortie sont traités.
+
+### Modulation bpsk:
 ```go
 func (c *LTEChannel) Modulate(bits []int64) []complex128 { // fonction pour moduler les bits dans les symboles complexes. Chaque bit est converti en symbole complexe
 	symbols := make([]complex128, len(bits)) // création d'un tableau pour stocker les symboles
@@ -51,7 +55,99 @@ func (c *LTEChannel) Modulate(bits []int64) []complex128 { // fonction pour modu
 	return symbols // retourne les symboles après la modulation
 }
 ```
+### output:
+```console
+place holder
+```
 
+### Modulation OFDM:
+```go
+func (c *LTEChannel) OFDMModulate(symbols []complex128) []complex128 { // Fonction pour effectuer la modulation OFDM sur les symboles
+	return fft.IFFT(symbols) // Utilise la transformée de Fourier rapide inverse (IFFT) pour obtenir les symboles modulés en OFDM.
+}
+```
+### output:
+```console
+place holder
+```
+### Rayleigh channel:
+```go
+func (c *LTEChannel) Rayleigh(symbols []complex128) []complex128 { // fonction pour modéliser l'effet de la diffusion de Rayleigh sur les symboles
+	for i := range symbols { // pour chaque symbole
+		gain := complex(rand.NormFloat64(), rand.NormFloat64()) // génération d'un gain complexe aléatoire suivant une distribution normale
+		symbols[i] = symbols[i] * gain                          // multiplication du symbole par le gain pour modéliser l'effet de la diffusion de Rayleigh
+	}
+	fmt.Println("symbols output from rayleigh channel\n", symbols)
+
+	return symbols // retourne les symboles après l'effet de la diffusion de Rayleigh
+}
+```
+### output:
+```console
+place holder
+```
+### AWGN bruit:
+```go
+func (c *LTEChannel) AWGN(symbols []complex128, snr float64) []complex128 { // fonction pour ajouter un bruit blanc additif gaussien (AWGN) aux symboles
+	power := math.Pow(10, (noiseFloor-snr)/10)           // calcule la puissance du bruit
+	symbolsPlusNoise := make([]complex128, len(symbols)) // créer un tableau pour stocker les symboles plus le bruit
+
+	for i := range symbols { // pour chaque symbole
+		noise := complex(rand.Float64()*power, 0) // générer un bruit complexe aléatoire proportionnel à la puissance du bruit
+		symbolsPlusNoise[i] = symbols[i] + noise  // ajout du bruit au symbole
+	}
+
+	return symbolsPlusNoise // retourne les symboles après ajout du bruit AWGN
+}
+```
+### output:
+```console
+place holder
+```
+### Transmission:
+```go
+func (c *LTEChannel) Transmit(bits []int64, snr float64) []complex128 { // Fonction pour transmettre des bits sur le canal LTE
+	symbols := c.Modulate(bits)       // Modulation des bits en symboles
+	symbols = c.OFDMModulate(symbols) // Modulation OFDM des symboles
+	symbols = c.Rayleigh(symbols)     // Ajout de l'effet de la diffusion de Rayleigh aux symboles
+	return c.AWGN(symbols, snr)       // Ajoute le bruit AWGN aux symboles et retourne les symboles transmis
+}
+```
+### output:
+```console
+place holder
+```
+La fonction `Transmit` intègre toutes les effets de modulation et de transmission (Rayleigh & AWGN) en un seul processus qui simule la transmission de bits sur un canal LTE. Le résultat de cette fonction est les symboles complexes qui représentent le signal transmis.
+![Hero Image](ensate.png) <!-- hero image -->
+
+### Démodulation OFDM:
+```go
+func (c *LTEChannel) OFDMDemodulate(symbols []complex128) []complex128 { // Fonction pour effectuer la démodulation OFDM sur les symboles
+	return fft.FFT(symbols) // Utilise la transformation de Fourier rapide (FFT) pour obtenir les symboles démodulés en OFDM.
+}
+```
+### output:
+```console
+place holder
+```
+
+### Démodulation bpsk:
+```go
+func (c *LTEChannel) Demodulate(symbols []complex128) []int64 { // Fonction pour démoduler les symboles en bits
+	bits := make([]int64, len(symbols)) // Crée un tableau pour stocker les bits
+
+	for i, s := range symbols { // Pour chaque symbole
+		if real(s) >= 0 { // si la partie réelle du symbole est supérieure ou égale à zéro
+			bits[i] = 1 // le bit est 1
+		} else { // sinon
+			bits[i] = 0 // le bit est 0
+		}
+	}
+
+	return bits // Retourne les bits après la démodulation
+}
+```
+![Hero Image](ensate.png) <!-- hero image -->
 
 ## Auteur
 OUAKKA Yassin
