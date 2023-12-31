@@ -19,7 +19,7 @@ Ce code implémente une simulation basique d'un canal LTE (Long-Term Evolution) 
 
 ## Utilisation
 Pour exécuter la simulation et le serveur web, assurez-vous d'avoir Go installé sur votre machine. Exécutez ensuite le fichier principal `go run main.go`. Le serveur web sera disponible à l'adresse [http://localhost:8080](http://localhost:8080).
-ou bien cliquer sur le fichier executable avec index.html dans le meme dossier, finalement vous pouvez visiter le test deployment via:[vercel.app](http://localhost:8080)
+ou bien cliquer sur le fichier executable avec index.html dans le meme dossier, le serveur web sera disponible à l'adresse [http://localhost:8080](http://localhost:8080).
 Le serveur web expose trois endpoints API pour obtenir des données sous forme de réponses JSON :
 - `/api/endpoint1`: Les bits démodulés après la simulation.
 - `/api/endpoint2`: Les symboles transmis modélisés comme des entiers après l'effet de diffusion de Rayleigh.
