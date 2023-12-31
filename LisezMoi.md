@@ -1,0 +1,1 @@
+## pour accéder à la documentation du projet veillez svp telecharger le dossier "svp_telecharger_moi" et executer le fichier ChaineComNum.exe et naviguer vers localhost:8080 dans votre navigateur.
