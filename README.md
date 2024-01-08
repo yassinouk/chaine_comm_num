@@ -37,6 +37,8 @@ Le serveur web expose trois endpoints API pour obtenir des données sous forme d
 ## Dépendances tierces
 Ce projet utilise le package tiers `github.com/mjibson/go-dsp/fft` pour les transformations FFT/IFFT.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/mjibson/go-dsp/fft.svg)](https://pkg.go.dev/github.com/mjibson/go-dsp/fft)
+
 ## Documentation
 Le code source fourni met en œuvre les fonctions primaires pour simuler la transmission de signaux sur un canal de Long Term Evolution (LTE). Il comporte la modulation Binary Phase Shift Keying (BPSK) et le multiplexage par répartition orthogonale de la fréquence (OFDM) pour transmettre les signaux sur le canal LTE. Il simule les effets typiques qui affectent la transmission du signal sur un canal LTE et comprend des fonctions pour gérer le bruit du signal et les effets de dégradation.
 
