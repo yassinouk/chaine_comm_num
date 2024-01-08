@@ -16,6 +16,7 @@ Ce code implémente une simulation basique d'un canal LTE (Long-Term Evolution) 
 - **Effet de diffusion de Rayleigh**: Modélisation de l'effet de la diffusion de Rayleigh sur les symboles transmis.
 - **Bruit blanc additif gaussien (AWGN)**: Ajout d'un niveau de bruit gaussien aux symboles transmis pour simuler des conditions réelles.
 
+![workflow](https://github.com/yassinouk/chaine_comm_num//actions/workflows/go.yml/badge.svg)
 ## Utilisation
 Pour exécuter la simulation et le serveur web, assurez-vous d'avoir Go installé sur votre machine. Exécutez ensuite le fichier principal `go run main.go`. Le serveur web sera disponible à l'adresse [http://localhost:8080](http://localhost:8080).
 ou bien cliquer sur le fichier executable avec index.html dans le meme dossier, le serveur web sera disponible à l'adresse [http://localhost:8080](http://localhost:8080).
